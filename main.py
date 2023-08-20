@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_sqlalchemy import SQLAlchemy
 from recommender import recommender
-import requests
+from movie_details import get_movie_details
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "appkey123"
@@ -96,7 +96,11 @@ def recommend():
             movie = request.args.get("movie")
             if movie:
                 recommendations, searched_movie = recommender(movie)
-                return render_template("recommend.html", session=session, recommendations=recommendations, movie=searched_movie)
+                session["movie"] = searched_movie
+                if isinstance(recommendations, list):
+                    session["movie_details"] = get_movie_details(
+                        session["movie"])
+                return render_template("recommend.html", session=session, recommendations=recommendations)
             return render_template("recommend.html", session=session)
         return redirect("/")
     if request.method == "POST":

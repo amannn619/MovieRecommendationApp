@@ -43,43 +43,88 @@
       </div>
     </nav>
     <header>
-      <h1>Welcome, {{session.firstname}}</h1>
-    </header>
-
-    <main class="mt-5">
-      <div class="container w-75">
-        <form action="" method="POST">
-          <div class="input-group mb-3">
+      <form action="" method="POST">
+        <div class="header-container">
+          <div class="input-group">
             <input
               type="text"
               class="form-control"
               id="movieName"
               name="movieName"
               placeholder="Search for Movie"
+              autocomplete="off"
               required
             />
             <button class="search-button" type="submit">
               <img src="../static/images/search.png" alt="" />
             </button>
           </div>
-        </form>
+        </div>
+      </form>
+    </header>
+
+    <main>
+      <div>
         {% if recommendations %}
         <div id="content">
           {% if recommendations != "no movie" %}
-          <div class="results-heading">
-            Showing results for "{{movie.title()}}"
+          <section class="results-heading">
+            Showing results for "{{session.movie.title()}}"
+          </section>
+          <div class="movie-details">
+            <div class="background-image">
+              <img
+                src="https://image.tmdb.org/t/p/original{{session['movie_details'].backdrop_path}}"
+                alt="background img"
+              />
+            </div>
+            <div class="poster">
+              <img
+                src="https://image.tmdb.org/t/p/original{{session['movie_details'].poster_path}}"
+                alt="movie poster"
+              />
+            </div>
+            <div class="movie-info">
+              <h1>{{session["movie_details"].title}}</h1>
+
+              <section class="genres">
+                | {% for i in session['movie_details'].genres %} {{i.name}} |
+                {%endfor%}
+              </section>
+              <section class="rating">
+                {{session['movie_details'].release_date}}&nbsp;&nbsp;
+                <b>|</b> &nbsp;&nbsp;{{session['movie_details'].runtime//60}}h
+                {{session['movie_details'].runtime%60}}m&nbsp;&nbsp; <b>|</b>
+                &nbsp;&nbsp;Rating: {{session['movie_details'].vote_average}}
+              </section>
+              <section class="overview">
+                <h1>Overview</h1>
+                {{session["movie_details"].overview}}
+                {{session["movie_details"].overview}} <br />
+                <i>Lang: {{session["movie_details"].original_language}}</i>
+              </section>
+            </div>
           </div>
 
-          <div class="movie-list">
-            {% for title in recommendations %}
-            <div class="movie-title">{{title}}</div>
+          <section class="movie-list mt-5">
+            {% for movie in recommendations %}
+            <div class="recommended-movie-tile">
+              <div class="recommended-movie-image">
+                <img
+                  src="https://image.tmdb.org/t/p/original{{movie[1]}}"
+                  alt=""
+                  width="100%"
+                />
+              </div>
+              <div class="recommended-movie-title">{{movie[0]}}</div>
+            </div>
             {% endfor %}
-          </div>
+          </section>
           {% else %}
-          <div class="results-heading">
-            Cannot understand "<span class="no-results">{{movie}}</span>" {%
-            endif %}
-          </div>
+          <section class="results-heading">
+            Cannot understand "<span class="no-results">{{session.movie}}</span
+            >" {% endif %}
+          </section>
         </div>
         {% endif %}
       </div>
@@ -91,5 +136,22 @@
   </body>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
-  <script src="../static/recommend.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const recommendedMovieTiles = document.querySelectorAll(
+        ".recommended-movie-tile"
+      );
+      recommendedMovieTiles.forEach((tile) => {
+        tile.addEventListener("click", function () {
+          const movieTitle = tile.querySelector(
+            ".recommended-movie-title"
+          ).textContent;
+          const queryString = `?movie=${movieTitle}`;
+          const currentURL = window.location.href.split("?")[0];
+          const newURL = currentURL + queryString;
+          window.location.href = newURL;
+        });
+      });
+    });
+  </script>
 </html>
