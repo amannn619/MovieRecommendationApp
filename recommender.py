@@ -2,6 +2,7 @@ import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import requests
+import os
 
 movies = pd.read_csv("movieData/final_movies_data.csv")
 cv = CountVectorizer(max_features=5000, stop_words='english')
@@ -10,7 +11,7 @@ similarity = cosine_similarity(vector)
 
 
 def get_movie(movie):
-    apikey = "67563d5737e9fd5ced1250495eaae39b"
+    apikey = os.environ.get("tmdb-api-key")
     url = f"https://api.themoviedb.org/3/search/movie?api_key={apikey}&query={movie}&page=1"
     response = requests.get(url)
     data = response.json()
@@ -42,5 +43,6 @@ def recommender(movie):
     distances = sorted(
         list(enumerate(similarity[index])), reverse=True, key=lambda x: x[1])
     for i in distances[1:11]:
-        recommendations.append(movies.iloc[i[0]].title)
+        recommendations.append(
+            (movies.iloc[i[0]].title, movies.iloc[i[0]].poster_path))
     return recommendations, movie
