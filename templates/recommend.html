@@ -43,7 +43,7 @@
       </div>
     </nav>
     <header>
-      <h1>Welcome, {{firstname}} {{lastname}}</h1>
+      <h1>Welcome, {{session.firstname}}</h1>
     </header>
 
     <main class="mt-5">
@@ -63,6 +63,25 @@
             </button>
           </div>
         </form>
+        {% if recommendations %}
+        <div id="content">
+          {% if recommendations != "no movie" %}
+          <div class="results-heading">
+            Showing results for "{{movie.title()}}"
+          </div>
+
+          <div class="movie-list">
+            {% for title in recommendations %}
+            <div class="movie-title">{{title}}</div>
+            {% endfor %}
+          </div>
+          {% else %}
+          <div class="results-heading">
+            Cannot understand "<span class="no-results">{{movie}}</span>" {%
+            endif %}
+          </div>
+        </div>
+        {% endif %}
       </div>
     </main>
 

@@ -32,22 +32,63 @@ header {
 #movieName{
   border-top-left-radius: 50px;
   border-bottom-left-radius: 50px;
-  border-top-right-radius: 50px;
-  border-bottom-right-radius: 50px;
-  /* background-color: transparent; */
+}
+#movieName:focus {
+  box-shadow:none;
+  border: 1px solid #333;
 }
 .search-button{
   position:relative;
-  background-color: transparent;
-  border : none;
-  padding: 1em;
+  background-color: #e0e0e0;
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+  border : 1px solid #ced4da;
+  padding: 1em 1.5em;
 }
+
 .search-button img{
   width:20px;
   transition: 0.15s ease-in-out;
 }
 .search-button img:hover{
   scale: 1.2;
+}
+.search-button:active {
+  background-color: #e0e0e0;
+  border-color: #333;
+}
+
+#content {
+  border: 1px solid red;
+  padding: 1em;
+}
+
+.results-heading {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.movie-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.movie-title {
+  background-color: #f0f0f0;
+  padding: 1rem;
+  border-radius: 5px;
+  transition: background-color 0.3s, transform 0.2s;
+  cursor: pointer;
+}
+
+.movie-title:hover {
+  background-color: #e0e0e0;
+  transform: translateY(-3px);
+}
+
+.no-results {
+  color: red;
 }
 
 footer {
