@@ -1,0 +1,16 @@
+<header class="">
+  <a class="logo" href="/"><i class="bx bx-film"></i></a>
+
+  <i class="bx bx-menu" id="menuIcon"></i>
+
+  <nav class="">
+    {% if session["islogged"] == False %}
+    <a class="nav-item nav-link active" id="login" href="/login">Login</a>
+    <a class="nav-item nav-link active" id="register" href="/register"
+      >Register</a
+    >
+    {% else %}
+    <a class="nav-item nav-link active" id="logout" href="/logout">Logout</a>
+    {% endif%}
+  </nav>
+</header>

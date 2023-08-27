@@ -1,14 +1,12 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_sqlalchemy import SQLAlchemy
-from recommender import recommender
-from movie_details import get_movie_details
+# from recommender import recommender
+# from movie_details import get_movie_details
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "appkey123"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///userdetails.db"
 db = SQLAlchemy(app)
-
-islogged = False
 
 
 class UserData(db.Model):
@@ -30,8 +28,14 @@ def check(email):
 
 @app.route("/", methods=["GET", "POST"])
 def home():
-    global islogged
-    return render_template("index.html", islogged=islogged, session=session)
+    try:
+        is_logged = session["islogged"]
+        print("is_logged:", is_logged)
+    except KeyError:
+        print("KeyError")
+        session['islogged'] = False
+
+    return render_template("index.html", session=session)
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -57,7 +61,6 @@ def register():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    global islogged
     if request.method == "POST":
         email = request.form.get("email")
         password = request.form.get("password")
@@ -66,11 +69,11 @@ def login():
             session["firstname"] = user.first_name
             session["lastname"] = user.last_name
             session["email"] = user.email
-            print(session)
             if password == user.password:
-                islogged = True
+                session["islogged"] = True
                 return redirect(url_for("home"))
             else:
+                session.clear()
                 return render_template('login.html', message="Password error")
         else:
             return render_template("login.html", message="Email error")
@@ -83,35 +86,31 @@ def login():
 
 @app.route("/logout")
 def logout():
-    global islogged
-    islogged = False
+    session["islogged"] = False
     session.clear()
     return redirect("/")
 
 
-@app.route("/recommend", methods=["GET", "POST"])
-def recommend():
-    if request.method == "GET":
-        if islogged:
-            movie = request.args.get("movie")
-            if movie:
-                recommendations, searched_movie = recommender(movie)
-                session["movie"] = searched_movie
-                if isinstance(recommendations, list):
-                    session["movie_details"] = get_movie_details(
-                        session["movie"])
-                return render_template("recommend.html", session=session, recommendations=recommendations)
-            return render_template("recommend.html", session=session)
-        return redirect("/")
-    if request.method == "POST":
-        movie_name = request.form.get("movieName")
-        print(movie_name)
-        return redirect(url_for("recommend", movie=movie_name))
+# @app.route("/recommend", methods=["GET", "POST"])
+# def recommend():
+#     if request.method == "GET":
+#         if session["islogged"]:
+#             movie = request.args.get("movie")
+#             if movie:
+#                 recommendations, searched_movie = recommender(movie)
+#                 session["movie"] = searched_movie
+#                 if isinstance(recommendations, list):
+#                     session["movie_details"] = get_movie_details(
+#                         session["movie"])
+#                 return render_template("recommend.html", session=session, recommendations=recommendations)
+#             return render_template("recommend.html", session=session)
+#         return redirect("/")
+#     if request.method == "POST":
+#         movie_name = request.form.get("movieName")
+#         return redirect(url_for("recommend", movie=movie_name))
 
 
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
         app.run(debug=True)
-        if True:
-            pass

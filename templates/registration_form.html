@@ -12,33 +12,7 @@
     <link rel="stylesheet" href="../static/registration form.css" />
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark">
-      <a class="navbar-brand" href="/">Movies</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarNavAltMarkup"
-        data-target="#navbarNavAltMarkup"
-        aria-controls="navbarNavAltMarkup"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div
-          class="navbar-nav"
-          id="nav"
-          data-message="{{ message|default('') }}"
-        >
-          <a class="nav-item nav-link active" id="register" href="/register"
-            >Register</a
-          >
-          <a class="nav-item nav-link active" id="login" href="/login">Login</a>
-        </div>
-      </div>
-    </nav>
+    {% include 'header.html' %}
 
     <div
       id="alert-message-error"
