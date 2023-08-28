@@ -17,20 +17,22 @@
     <main>
       <div class="heading">
         <h1>
-          {% if session["islogged"]==True %} Hi {{session.firstname}}, {% endif
-          %} Welcome To The Movie Recommender
+          {% if session["islogged"]==True %} Hi
+          <span> {{session.firstname}}</span>, {% endif %} Welcome To The Movie
+          <span>Recommender</span>
         </h1>
       </div>
 
       <div class="project-info">
         <div class="project-overview">
-          <h2>Project Overview</h2>
+          <h2>Project <span>Overview</span></h2>
           <p>
-            A content-based movie recommender system that suggests movies to
-            users based on the content of the movie that they have searched for.
-            The system utilizes data from the 15,000 most popular movies on TMDB
-            (The Movie Database) and make use of the cosine similarity algorithm
-            to calculate movie similarity.
+            A <span>content-based</span> movie recommender system that suggests
+            movies to users based on the content of the movie that they have
+            searched for. The system utilizes data from the
+            <span>15,000</span> most popular movies on TMDB (The Movie Database)
+            and make use of the <span>cosine similarity</span> algorithm to
+            calculate movie similarity.
           </p>
         </div>
 
@@ -40,45 +42,47 @@
             <ul>
               <li>User registration and authentication.</li>
               <li>Movie search and recommendations.</li>
-              <li>Display detailed movie information using TMDB API.</li>
+              <li>
+                Display detailed movie information using <span>TMDB API</span>.
+              </li>
               <li>User-friendly interface with HTML, CSS, and JavaScript.</li>
-              <li>Utilize Flask to build the web application.</li>
+              <li>Details and recommendations based on recommendations.</li>
             </ul>
           </div>
           <div class="technologies-used">
             <h2>Technologies Used</h2>
             <ul>
-              <li>Python (Flask) for the backend.</li>
+              <li><span>Python (Flask)</span> for the backend.</li>
               <li>
                 Cosine similarity algorithm for content-based recommendations.
               </li>
-              <li>TMDB API for fetching movie details.</li>
-              <li>HTML/CSS for user interface design.</li>
-              <li>JavaScript for dynamic elements and interactions.</li>
+              <li><span>TMDB API</span> for fetching movie details.</li>
+              <li>HTML&CSS for user interface design.</li>
+              <li>
+                <span>Jinja2</span> Templating for dynamic elements and
+                interactions.
+              </li>
             </ul>
           </div>
         </div>
       </div>
     </main>
 
-    <section class="login-section" i>
-      <h2>Check The Recommendations</h2>
+    <div class="recommender-section">
       {% if session['islogged'] == False %}
-      <div id="login-section">
-        <p>
-          To start receiving personalized movie recommendations, please log in
-          to your account. If you don't have an account, you can quickly
-          register to get started.
-        </p>
-        <a href="/login" class="login-button">Log In</a>
-        <a href="/register" class="register-button">Register</a>
-      </div>
+      <a href="/login" class="button" id="login-button">Log In</a>
+      <a href="/register" class="button" id="register-button">Register</a>
+      <p>
+        To view the movie recommendations, please log in to your account. If you
+        don't have an account, you can quickly register to get started.
+      </p>
+
       {% else %}
-      <a href="/recommend" class="recommend-button" id="recommend-button"
+      <a href="/recommend" class="button" id="recommend-button"
         >Go to the Recommender</a
       >
       {% endif %}
-    </section>
+    </div>
 
     {% include 'footer.html' %}
   </body>

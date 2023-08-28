@@ -12,10 +12,10 @@
   }
 
 :root{
-  --bg-color: #2C3333;
-  --second-bg-color: #2E4F4F;
-  --text-color: #ffffff;
-  --main-color: #FFED00;
+  --bg-color: #2E3840;
+  --second-bg-color: #4E6E81;
+  --text-color: #F9DBBB;
+  --main-color: #b40000;
 }
 
 html{
@@ -26,12 +26,14 @@ body{
   background: var(--bg-color);
   color: var(--text-color)
 }
+span{
+  color:var(--main-color)
+}
 header{
   position: fixed;
   top: 0;
   left: 0;
   background: var(--bg-color);
-
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -41,7 +43,6 @@ header{
 }
 
 .logo{
-  /* position: fixed; */
   font-size: 4rem;
   color: var(--text-color);
   font-weight: 600;
@@ -66,7 +67,7 @@ nav a:hover{
 }
 
 main{
-  padding: 9rem 10%;
+  padding: 9rem 10% 4rem;
   background: var(--second-bg-color);
 }
 
@@ -116,12 +117,256 @@ li{
   margin-left: 20px;
 }
 
+.recommender-section{
+  background: var(--bg-color);
+  text-align: center;
+  font-size: 2rem;
+  padding: 5rem 10% 3rem;
+}
+.recommender-section p{
+  margin-top: 4rem;
+}
+
+.button{
+  color: var(--text-color);
+  background: var(--main-color);
+  padding: 1rem 2rem;
+  letter-spacing: .1rem;
+  border-radius: 10px;
+  margin: 3rem;
+  box-shadow: 0 0 2rem var(--main-color);
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+.button:hover{
+  box-shadow: none;
+}
+
+/* ------------------------------------------------------------Login---------------------------------------------------------- */
+
+.login-form{
+  min-height: 95vh;
+}
+
+.login h1, .registration h1{
+  text-align: center;
+  font-size: 3rem;
+  margin: 4rem 0;
+  line-height: 6rem;
+}
+
+.login p, .registration p{
+  font-size: 2rem;
+}
+
+.login button, .registration button{
+  font-size: 2rem;
+}
+
+.link{
+  color: var(--text-color);
+  margin-left: .5rem;
+  transition: .3s ease;
+}
+.link:hover{
+  color: var(--main-color);
+}
+
+form{
+  max-width: 70rem;
+  margin: 1rem auto;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+label{
+  font-size: 2rem;
+}
+
+input{
+  width: 100%;
+  padding: 1.5rem;
+  font-size: 1.6rem;
+  color: var(--text-color);
+  background: var(--bg-color);
+  border-radius: .8rem;
+  margin: .7rem 0;
+}
+
+.registration-form{
+  max-height: 95vh;
+}
+
+.user-name{
+  display:flex;
+  justify-content: space-between;
+}
+.user-name .input{
+  width: 49%;
+}
+
 footer {
+  display:flex;
+  justify-content: center;
+  align-items: center;
   bottom: 0;
+  left: 0;
   width:100%;
   background-color: var(--bg-color);
   color: var(--text-color);
   text-align: center;
   padding: 1rem;
   margin-top: auto;
+}
+
+/* ---------------------------------------------------------Recommend.html--------------------------------------------------------------------- */
+.recommend{
+  min-height: 95vh;
+  padding-top: 6rem;
+}
+
+.movie-search-bar form{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.search-icon{
+  background: none;
+  font-size: 3rem;
+  color:var(--text-color);
+  margin-left:  1rem;
+  transition: .2s ease;
+}
+.search-icon:hover{
+  cursor: pointer;
+  color: var(--main-color);
+  transform: translateY(-2px);
+}
+
+#content{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.results-heading{
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.movie-details-container{
+  display: flex;
+  box-shadow: 0 0 2rem var(--bg-color);
+  border-radius: 1rem;
+  text-align: center;
+  overflow:hidden;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.postercumdetails{
+  display:grid;
+  grid-template-columns: 1fr 2.5fr;
+}
+
+.poster .poster-image{
+  width: 100%;
+  height:100%;
+}
+.movie-info{
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  background: var(--bg-color);
+  overflow-y: hidden;
+}
+
+.movie-list {
+  width: 90vw;
+  padding: 1rem;
+  display: flex;
+  overflow-x: auto;
+}
+.recommended-movie-tile {
+  position: relative;
+  flex: 0 0 auto;
+  margin-right: 15px; 
+  width: 200px; 
+  height: 300px; 
+  border-radius: 10px; 
+  box-shadow: 0 0 1rem var(--bg-color); 
+  overflow: hidden;
+  transition: .5s ease;
+}
+
+.recommended-movie-tile:hover{
+  box-shadow: 0 0 1rem var(--main-color); 
+}
+
+.recommended-movie-image img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px 10px 0 0;
+  object-fit: fill;
+  transition: .5s ease;
+}
+
+.recommended-movie-tile:hover .recommended-movie-image img{
+  scale: 1.1;
+  cursor: pointer;
+}
+
+.recommended-movie-title{
+  position:absolute;
+  bottom: 0;
+  left:0;
+  width: 100%;
+  background: linear-gradient(rgba(0,0,0,.1),var(--main-color));
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: .2rem;
+  font-size: 2rem;
+  transform: translateY(100%);
+  transition: .5s ease;
+}
+
+.recommended-movie-tile:hover .recommended-movie-title{
+  cursor: pointer;
+  transform: translateY(0);
+}
+.movie-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.movie-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.movie-list::-webkit-scrollbar-thumb {
+  background: var(--bg-color);
+}
+
+@media (max-width: 700px){
+  .postercumdetails{
+    grid-template-columns: 1fr 1fr;
+  }  
+}
+
+@media (min-width: 991px){
+  .postercumdetails{
+    font-size: 150%;
+  }  
+  
 }
